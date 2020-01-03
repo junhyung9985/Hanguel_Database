@@ -19,8 +19,6 @@ from PIL import Image
 import numpy as np
 import csv
 
-! cd "../Hanguel_Database/" && mkdir test && mkdir train
-
 test_dir = "../Hanguel_Database/test"
 train_dir = "../Hanguel_Database/train"
 
