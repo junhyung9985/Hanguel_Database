@@ -22,18 +22,19 @@ import csv
 test_dir = "../Hanguel_Database/test"
 train_dir = "../Hanguel_Database/train"
 
-label = open('label.csv', 'r', encoding='utf-8')
+label = open('labels.csv', 'r', encoding='utf-8')
 rdr = csv.reader(label)
 for line in rdr:
+    line = line[0]
     save_ts = test_dir+"/"+line
     save_tr = train_dir+"/"+line
     if (os.path.exists(save_ts)==False): os.makedirs(os.path.join(save_ts))
-    if (!os.path.exists(save_tr)==False): os.makedirs(os.path.join(save_tr))
+    if (os.path.exists(save_tr)==False): os.makedirs(os.path.join(save_tr))
 
 for f in test_file:
-    f = f.split('_')
-    class_name = f[0]
-    num = (f[1].split('.'))[0]
+    fi = f.split('_')
+    class_name = fi[0]
+    num = (fi[1].split('.'))[0]
     ls = list(csv.reader(open(join(test_path, f), newline=''), delimiter=','))
     lst = []
     for tmp in ls:
