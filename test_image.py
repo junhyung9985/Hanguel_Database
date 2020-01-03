@@ -27,8 +27,8 @@ rdr = csv.reader(label)
 for line in rdr:
     save_ts = test_dir+"/"+line
     save_tr = train_dir+"/"+line
-    if (!os.path.exists(save_ts)): os.makedirs(os.path.join(save_ts))
-    if (!os.path.exists(save_tr)): os.makedirs(os.path.join(save_tr))
+    if (os.path.exists(save_ts)==False): os.makedirs(os.path.join(save_ts))
+    if (!os.path.exists(save_tr)==False): os.makedirs(os.path.join(save_tr))
 
 for f in test_file:
     f = f.split('_')
