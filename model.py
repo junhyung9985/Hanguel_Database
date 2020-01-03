@@ -19,7 +19,7 @@ class MyCNN(nn.Module):
         self.output_dim=output_dim
 
         self.cnn_layers = nn.Sequential(
-            nn.Conv2d(1,32,3,padding=1), # try with different kernels
+            nn.Conv2d(3,32,3,padding=1), # try with different kernels
             nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.Conv2d(32,32,3,padding=1),
@@ -67,10 +67,12 @@ print(param_list)
 
 data_transforms = {
     'train': transforms.Compose([
+        transforms.Resize((100,100)),
         transforms.ToTensor(),
         transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
     ]),
     'test': transforms.Compose([
+        transforms.Resize((100,100)),
         transforms.ToTensor(),
         transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
     ]),
@@ -83,7 +85,7 @@ batch_size = 64 # try with different batch_size
 test_batch_size = 10
 data_dir = '/home/junhyung9985/Hanguel_Database/'
 train_dir = 'train'
-test_dir = './drive/My Drive/public/valid1'
+test_dir = 'test'
 
 train_set = datasets.ImageFolder(data_dir+train_dir, data_transforms['train'])
 test_set = datasets.ImageFolder(test_dir, test_transform)
@@ -98,8 +100,6 @@ test_size = len(test_set)
 class_names = train_set.classes
 
 print(class_names) 
-print(f'Train image size: {train_size}')
-print(f'Validation image size: {valid_size}')
 
 """**training**"""
 
@@ -141,9 +141,3 @@ print('hits, accuracy', hits, hits/(len(test_set)+0.0))
 
 torch.save(model, result_dir + 'ACC_{}.model'.format( hits/(len(test_set)+0.0)))
 #torch.save(test_transform, result_dir + 'teamX.transform')
-
-"""—
-training is done! 
-* submit your code, model file and transform file.
-* you can put the files in a directory, and share the directory to TAs. 
-—
