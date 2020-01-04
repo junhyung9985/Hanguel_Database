@@ -59,12 +59,12 @@ class MyCNN(nn.Module):
 
 data_transforms = {
     'train': transforms.Compose([
-        transforms.Resize(32,32),
+        transforms.Resize((32,32)),
         transforms.ToTensor(),
         transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
     ]),
     'test': transforms.Compose([
-        transforms.Resize(32,32),
+        transforms.Resize((32,32)),
         transforms.ToTensor(),
         transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
     ]),
