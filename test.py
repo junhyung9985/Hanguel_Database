@@ -71,7 +71,7 @@ test_loader = torch.utils.data.DataLoader(test_set, batch_size=test_batch_size, 
 
 
 result_dir = '/home/junhyung9985/Hanguel_Database/result/'
-model_name = 'team3.model'
+model_name = input("Input(model_name): ")
 
 model = torch.load(result_dir + model_name)
 model.cuda()
