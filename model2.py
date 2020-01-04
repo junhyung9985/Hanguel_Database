@@ -19,13 +19,13 @@ class MyCNN(nn.Module):
         self.output_dim=output_dim
 
         self.cnn_layers = nn.Sequential(
-            nn.Conv2d(3,32,3,padding=1), # try with different kernels
+            nn.Conv2d(1,32,3,padding=1), # try with different kernels
             nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.Conv2d(32,32,3,padding=1),
             nn.BatchNorm2d(32),
             nn.ReLU(),
-            nn.MaxPool2d(2,2), # 32 x (25x25)
+            nn.MaxPool2d(2,2), # 32 x (16x16)
             
             nn.Conv2d(32,16,3,padding=1),
             nn.BatchNorm2d(16),
@@ -33,10 +33,18 @@ class MyCNN(nn.Module):
             nn.Conv2d(16,16,3,padding=1),
             nn.BatchNorm2d(16),
             nn.ReLU(),
-            nn.MaxPool2d(2,2) # 16 x (5x5) 
+            nn.MaxPool2d(2,2), # 16 x (8x8)
+
+            nn.Conv2d(16, 8, 3, padding=1),
+            nn.BatchNorm2d(8),
+            nn.ReLU(),
+            nn.Conv2d(8, 8, 3, padding=1),
+            nn.BatchNorm2d(8),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2)  # 8 x (4x4)
         )
         self.fc_layer = nn.Sequential(
-            nn.Linear(16*7*7,100),
+            nn.Linear(8*4*4,100),
             nn.BatchNorm1d(100),
             nn.ReLU(),
             nn.Linear(100,output_dim)
@@ -67,12 +75,12 @@ print(param_list)
 
 data_transforms = {
     'train': transforms.Compose([
-        transforms.Resize(28,28),
+        transforms.Resize((32,32)),
         transforms.ToTensor(),
         transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
     ]),
     'test': transforms.Compose([
-        transforms.Resize(28,28),
+        transforms.Resize((32,32)),
         transforms.ToTensor(),
         transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
     ]),
@@ -125,5 +133,19 @@ for i in range(num_epoch):
             print(i,j, loss.data.cpu())
 
 print('training is done by max_epochs', num_epoch)
-torch.save(model, result_dir + '/team3.model')
+
+model.eval()
+hits = 0
+for k,[image,label] in enumerate(test_loader):
+    x = image.cuda()
+    y_= label.cuda()
+  
+    output = model(x)
+    y_est = output.argmax(1)
+    print('Target', label.numpy(), 'Prediction', y_est.cpu().numpy())
+    hits = hits + sum(y_est == y_)
+print('hits, accuracy', hits, hits/(len(test_set)+0.0))
+
+
+torch.save(model, result_dir + 'ACC_{}.model'.format( hits/(len(test_set)+0.0)))
 #torch.save(test_transform, result_dir + 'teamX.transform')
