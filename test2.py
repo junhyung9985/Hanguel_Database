@@ -25,18 +25,26 @@ class MyCNN(nn.Module):
             nn.Conv2d(32, 32, 3, padding=1),
             nn.BatchNorm2d(32),
             nn.ReLU(),
-            nn.MaxPool2d(2, 2),  # 32 x (25x25)
+            nn.MaxPool2d(2, 2),  # 32 x (16x16)
 
-            nn.Conv2d(32, 16, 3, padding=1),
+            nn.Conv2d(32, 16, 2, padding=1),
             nn.BatchNorm2d(16),
             nn.ReLU(),
             nn.Conv2d(16, 16, 3, padding=1),
             nn.BatchNorm2d(16),
             nn.ReLU(),
-            nn.MaxPool2d(2, 2)  # 16 x (5x5)
+            nn.MaxPool2d(2, 2),  # 16 x (8x8)
+
+            nn.Conv2d(16, 8, 3, padding=1),
+            nn.BatchNorm2d(8),
+            nn.ReLU(),
+            nn.Conv2d(8, 8, 3, padding=1),
+            nn.BatchNorm2d(8),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2)  # 8 x (4x4)
         )
         self.fc_layer = nn.Sequential(
-            nn.Linear(16 * 7 * 7, 100),
+            nn.Linear(8 * 4 * 4, 100),
             nn.BatchNorm1d(100),
             nn.ReLU(),
             nn.Linear(100, output_dim)
@@ -48,6 +56,7 @@ class MyCNN(nn.Module):
         out = self.fc_layer(out)
 
         return out
+
 
 data_transforms = {
     'train': transforms.Compose([
