@@ -104,7 +104,7 @@ print(class_names)
 """**training**"""
 
 result_dir = '/home/junhyung9985/Hanguel_Database/result'
-num_epoch = 100 # try with different epochs and find the best epoch
+num_epoch = 1 # try with different epochs and find the best epoch
 
 if not os.path.exists(result_dir):
     os.mkdir(result_dir)    
