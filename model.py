@@ -104,7 +104,7 @@ print(class_names)
 """**training**"""
 
 result_dir = '/home/junhyung9985/Hanguel_Database/result'
-num_epoch = 100 # try with different epochs and find the best epoch
+num_epoch = 10 # try with different epochs and find the best epoch
 
 if not os.path.exists(result_dir):
     os.mkdir(result_dir)    
@@ -125,5 +125,5 @@ for i in range(num_epoch):
             print(i,j, loss.data.cpu())
 
 print('training is done by max_epochs', num_epoch)
-torch.save(model, result_dir + '/team3.model')
+torch.save(model, result_dir + '/epoch_{}_lr_{}.model'.format(num_epoch, learning_rate)
 #torch.save(test_transform, result_dir + 'teamX.transform')
