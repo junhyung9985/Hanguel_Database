@@ -11,6 +11,44 @@ import os
 import warnings
 warnings.filterwarnings("ignore")
 
+
+class MyCNN(nn.Module):
+    def __init__(self, output_dim=10):
+        super(MyCNN, self).__init__()
+
+        self.output_dim = output_dim
+
+        self.cnn_layers = nn.Sequential(
+            nn.Conv2d(3, 32, 3, padding=1),  # try with different kernels
+            nn.BatchNorm2d(32),
+            nn.ReLU(),
+            nn.Conv2d(32, 32, 3, padding=1),
+            nn.BatchNorm2d(32),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2),  # 32 x (25x25)
+
+            nn.Conv2d(32, 16, 3, padding=1),
+            nn.BatchNorm2d(16),
+            nn.ReLU(),
+            nn.Conv2d(16, 16, 3, padding=1),
+            nn.BatchNorm2d(16),
+            nn.ReLU(),
+            nn.MaxPool2d(2, 2)  # 16 x (5x5)
+        )
+        self.fc_layer = nn.Sequential(
+            nn.Linear(16 * 7 * 7, 100),
+            nn.BatchNorm1d(100),
+            nn.ReLU(),
+            nn.Linear(100, output_dim)
+        )
+
+    def forward(self, x):
+        out = self.cnn_layers(x)
+        out = out.view(out.shape[0], -1)
+        out = self.fc_layer(out)
+
+        return out
+
 data_transforms = {
     'train': transforms.Compose([
         transforms.Resize(28,28),
