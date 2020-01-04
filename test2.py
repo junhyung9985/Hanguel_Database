@@ -58,7 +58,7 @@ data_transforms = {
     'test': transforms.Compose([
         transforms.Resize(28,28),
         transforms.ToTensor(),
-       # transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
+        transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
     ]),
 }
 
@@ -87,4 +87,3 @@ for k, [image, label] in enumerate(test_loader):
     print('Target', label.numpy(), 'Prediction', y_est.cpu().numpy())
     hits = hits + sum(y_est == y_)
 print('hits, accuracy', hits, hits / (len(test_set) + 0.0))
-
