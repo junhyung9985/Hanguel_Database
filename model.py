@@ -51,7 +51,7 @@ class MyCNN(nn.Module):
 
 """# try to change the learning rate"""
 
-learning_rate = 0.0005
+learning_rate = 0.0001
 output_dim=2350
 
 model = MyCNN(output_dim=output_dim).cuda()
