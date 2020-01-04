@@ -69,12 +69,12 @@ data_transforms = {
     'train': transforms.Compose([
         transforms.Resize((28, 28)),
         transforms.ToTensor(),
-        transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
+        #transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
     ]),
     'test': transforms.Compose([
         transforms.Resize((28, 28)),
         transforms.ToTensor(),
-        transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
+        #transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
     ]),
 }
 test_transform = data_transforms['test']
@@ -139,5 +139,5 @@ for k,[image,label] in enumerate(test_loader):
 print('hits, accuracy', hits, hits/(len(test_set)+0.0))
 
 
-torch.save(model, result_dir + '/ACC_{}.model'.format( hits/(len(test_set)+0.0)))
+torch.save(model, result_dir + '/ACC_{}_{}.model'.format(num_epoch, hits/(len(test_set)+0.0)))
 #torch.save(test_transform, result_dir + 'teamX.transform')
