@@ -67,12 +67,10 @@ print(param_list)
 
 data_transforms = {
     'train': transforms.Compose([
-        transforms.Resize(28,28),
         transforms.ToTensor(),
         transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
     ]),
     'test': transforms.Compose([
-        transforms.Resize(28,28),
         transforms.ToTensor(),
         transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
     ]),
@@ -104,7 +102,7 @@ print(class_names)
 """**training**"""
 
 result_dir = '/home/junhyung9985/Hanguel_Database/result'
-num_epoch = 1 # try with different epochs and find the best epoch
+num_epoch = 100 # try with different epochs and find the best epoch
 
 if not os.path.exists(result_dir):
     os.mkdir(result_dir)    
@@ -125,5 +123,19 @@ for i in range(num_epoch):
             print(i,j, loss.data.cpu())
 
 print('training is done by max_epochs', num_epoch)
-torch.save(model, result_dir + '/team3.model')
+
+model.eval()
+hits = 0
+for k,[image,label] in enumerate(test_loader):
+    x = image.cuda()
+    y_= label.cuda()
+  
+    output = model(x)
+    y_est = output.argmax(1)
+    print('Target', label.numpy(), 'Prediction', y_est.cpu().numpy())
+    hits = hits + sum(y_est == y_)
+print('hits, accuracy', hits, hits/(len(test_set)+0.0))
+
+
+torch.save(model, result_dir + 'ACC_{}.model'.format( hits/(len(test_set)+0.0)))
 #torch.save(test_transform, result_dir + 'teamX.transform')
