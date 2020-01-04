@@ -25,7 +25,7 @@ class MyCNN(nn.Module):
             nn.Conv2d(32,32,3,padding=1),
             nn.BatchNorm2d(32),
             nn.ReLU(),
-            nn.MaxPool2d(4,4), # 32 x (25x25)
+            nn.MaxPool2d(2,2), # 32 x (25x25)
             
             nn.Conv2d(32,16,3,padding=1),
             nn.BatchNorm2d(16),
@@ -33,10 +33,10 @@ class MyCNN(nn.Module):
             nn.Conv2d(16,16,3,padding=1),
             nn.BatchNorm2d(16),
             nn.ReLU(),
-            nn.MaxPool2d(5,5) # 16 x (5x5) 
+            nn.MaxPool2d(2,2) # 16 x (5x5) 
         )
         self.fc_layer = nn.Sequential(
-            nn.Linear(16*5*5,100),
+            nn.Linear(16*7*7,100),
             nn.BatchNorm1d(100),
             nn.ReLU(),
             nn.Linear(100,output_dim)
@@ -67,12 +67,10 @@ print(param_list)
 
 data_transforms = {
     'train': transforms.Compose([
-        transforms.Resize((100,100)),
         transforms.ToTensor(),
         transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
     ]),
     'test': transforms.Compose([
-        transforms.Resize((100,100)),
         transforms.ToTensor(),
         transforms.Normalize([0.5, 0.5, 0.5], [0.3, 0.3, 0.3])
     ]),
@@ -104,7 +102,7 @@ print(class_names)
 """**training**"""
 
 result_dir = '/home/junhyung9985/Hanguel_Database/result'
-num_epoch = 1000 # try with different epochs and find the best epoch
+num_epoch = 100 # try with different epochs and find the best epoch
 
 if not os.path.exists(result_dir):
     os.mkdir(result_dir)    
