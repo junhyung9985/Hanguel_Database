@@ -33,7 +33,7 @@ class MyCNN(nn.Module):
             nn.Conv2d(16,16,3,padding=1),
             nn.BatchNorm2d(16),
             nn.ReLU(),
-            nn.MaxPool2d(2,2) # 16 x (8x8)
+            nn.MaxPool2d(2,2), # 16 x (8x8)
 
             nn.Conv2d(16, 8, 3, padding=1),
             nn.BatchNorm2d(8),
