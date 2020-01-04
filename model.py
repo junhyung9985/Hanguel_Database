@@ -125,5 +125,5 @@ for i in range(num_epoch):
             print(i,j, loss.data.cpu())
 
 print('training is done by max_epochs', num_epoch)
-torch.save(model, result_dir + '/epoch_{}_lr_{}.model'.format(num_epoch, learning_rate)
+torch.save(model, result_dir + '/epoch_{}_lr_{}.model'.format(num_epoch, learning_rate))
 #torch.save(test_transform, result_dir + 'teamX.transform')
