@@ -51,7 +51,7 @@ class MyCNN(nn.Module):
 
 """# try to change the learning rate"""
 
-learning_rate = 0.0001
+learning_rate = 0.001
 output_dim=2350
 
 model = MyCNN(output_dim=output_dim).cuda()
@@ -104,7 +104,7 @@ print(class_names)
 """**training**"""
 
 result_dir = '/home/junhyung9985/Hanguel_Database/result'
-num_epoch = 30 # try with different epochs and find the best epoch
+num_epoch = 20 # try with different epochs and find the best epoch
 
 if not os.path.exists(result_dir):
     os.mkdir(result_dir)    
