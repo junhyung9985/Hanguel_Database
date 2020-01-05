@@ -31,11 +31,11 @@ for line in rdr:
     if (os.path.exists(save_ts)==False): os.makedirs(os.path.join(save_ts))
     if (os.path.exists(save_tr)==False): os.makedirs(os.path.join(save_tr))
 
-for f in test_file:
+for f in train_file:
     fi = f.split('_')
     class_name = fi[0]
     num = (fi[1].split('.'))[0]
-    ls = list(csv.reader(open(join(test_path, f), newline=''), delimiter=','))
+    ls = list(csv.reader(open(join(train_path, f), newline=''), delimiter=','))
     lst = []
     for tmp in ls:
         temp = [a for a in tmp if a!='']
@@ -44,7 +44,7 @@ for f in test_file:
     matrix = np.array(lst).astype("uint8")
     imgObj = Image.fromarray(matrix)
     resized_imgObj = imgObj.resize((28, 28))
-    resized_imgObj.save("../Hanguel_Database/test/{}/{}.jpg".format(class_name,num))
+    resized_imgObj.save("../Hanguel_Database/train/{}/{}.jpg".format(class_name,num))
     '''
     imgObj.show()
     resized_imgObj.show()
